@@ -3,21 +3,14 @@ quiz_filename = f"{quiz_name}.txt"
 
 quiz_questions = []
 
-def question_creator():
-    while True:
-        question = input(f"\nPress 0 to exit\nEnter question: ")
-        if question == "0":
-            print("Stopping Quiz Creator....")
-            break
-        else: 
-            options = choices()
-            qna = {
-                "question": question,
-                "choices": options,
-            }
-            quiz_questions.append(qna)
+# Create quiz by asking user to input questions, options, and correct answer
+while True:
+    question = input(f"\nPress 0 to exit\nEnter question: ")
+    if question == "0":
+        print("Stopping Quiz Creator....")
+        break
 
-def choices():
+    else:
         choice_a = input("Option a: ")
         choice_b = input("Option b: ")
         choice_c = input("Option c: ")
@@ -30,23 +23,18 @@ def choices():
             else:
                 print("Please enter a valid option")
 
-        
-        return {
-            "a": choice_a,
-            "b": choice_b,
-            "c": choice_c,
-            "d": choice_d
-        }
+    quiz_content = (
+        f"{question}\n"
+        f"a) {choice_a}\n"
+        f"b) {choice_b}\n"
+        f"c) {choice_c}\n"
+        f"d) {choice_d}\n"
+        f"Correct answer: {correct_answer}\n\n"
+    )
+    quiz_questions.append(quiz_content)
 
 # Store input into text file (file.write)
-
-def write_as_file():
-    with open(f"{quiz_name}.txt", "w") as file:
-        for item in quiz_questions:
-            file.write(f"Question {item}: {item['question']}\n")
-            for key in item["choices"].items():
-                file.write(f"{key}\n")
-            file.write("\n")
-            
-question_creator()
-write_as_file()
+with open(quiz_filename, "w") as file:
+    file.write(f"Quiz name: {quiz_filename}\n")
+    for items in quiz_questions:
+        file.write(quiz_content)
