@@ -1,3 +1,4 @@
+# Input quiz name
 quiz_name = input("Enter the name of this quiz: ")
 quiz_filename = f"{quiz_name}.txt"
 
@@ -22,7 +23,8 @@ while True:
                 break
             else:
                 print("Please enter a valid option")
-
+    
+    # Format quiz content before writing into .txt file
     quiz_content = (
         f"{question}\n"
         f"a) {choice_a}\n"
@@ -35,6 +37,7 @@ while True:
 
 # Store input into text file (file.write)
 with open(quiz_filename, "w") as file:
-    file.write(f"Quiz name: {quiz_filename}\n")
+    file.write(f"Quiz name: {quiz_name}\n\n")
     for items in quiz_questions:
-        file.write(quiz_content)
+        file.write(items)
+        file.write("\n\n")
