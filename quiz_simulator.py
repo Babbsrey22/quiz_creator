@@ -97,18 +97,13 @@ def load_quiz(quiz_filename):
             quiz_data['answer'] = lines[5].split(": ")[1].strip()
         except IndexError:
             print("Malformed answer line!")
-            continue
-        else:
-            print("Missing correct answer!")
             print(block)
             continue
-
-    questions.append(quiz_data)
+        
+        questions.append(quiz_data)
     return questions
-    
 
-
-def option_3():
+def option_3():   
     while True:
         filename = input("Enter the file name of the quiz (e.g. 'quiz.txt'): ")
         try:
@@ -121,20 +116,22 @@ def option_3():
         score = 0
 
         # Add features like points system or time sensitivity if possible
-        for question in enumerate(questions):
-            print(f"{question}\n" \
+        for idx, question in enumerate(questions, start=1):
+            print(f"\nQuestion {idx}: {question['question']}\n" \
             f"a) {question['a']}\n" \
             f"b) {question['b']}\n" \
             f"c) {question['c']}\n" \
             f"d) {question['d']}\n")
             user_answer = input("Your answer (a/b/c/d): ").strip().lower()
 
-        if user_answer == q['answer']:
-            print("YIPPEEEEEE CORRECT!!!!")
-            score += 1
-        else:
-            print("Aww man... Better luck next time :(")
-            print(f"By the way, the correct answer is: {question['answer']}")
+            if user_answer == question['answer']:
+                print("\nYIPPEEEEEE CORRECT!!!!")
+                score += 1 
+                print(f"\t\tScore: {score}")
+            else:
+                print("Aww man... Better luck next time :(")
+                print(f"By the way, the correct answer is: {question['answer']}")
+                print(f"\t\tScore: {score}")
 
         print(f"Quiz complete! Your total score: {score}/{len(questions)}")
 
