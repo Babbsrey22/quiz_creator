@@ -10,18 +10,43 @@ def main_menu():
     "\n[4] Exit Quiz Simulator")
 
 def option_1():
-    print("[Put instructions here]")
+    while True:
+        print("[Put instructions here]")
+
+        repeat = input("\nReturn to main menu?\nYour selection (y/n): ")
+        if repeat.lower() == 'y':
+            return
+        elif repeat.lower() == 'n':
+            continue
 
 def option_2():
-    print("[Put option 2 here]")
+    while True:
+        print("[Put option 2 here]")
+
+        repeat = input("\nReturn to main menu?\nYour selection (y/n): ")
+        if repeat.lower() == 'y':
+            return
+        elif repeat.lower() == 'n':
+            continue
 
 def option_3():
-    print("[Put option 3 here]")
+    while True:
+        print("[Put option 3 here]")
 
-main_menu()
-option = int(input("\nMain Menu Selection: "))
+        repeat = input("\nReturn to main menu?\nYour selection (y/n): ")
+        if repeat.lower() == 'y':
+            return
+        elif repeat.lower() == 'n':
+            continue
 
-while option != 0:
+while True:
+    main_menu()
+    try:
+        option = int(input("\nMain menu selection: "))
+    except ValueError:
+        print("Please enter a valid number from 1-4!!")
+        continue
+
     if option == 1:
         print("Loading instructions....\n")
         time.sleep(2)
@@ -33,8 +58,11 @@ while option != 0:
     elif option == 3:
         print("Loading Quiz Maker homescreen....\n")
         time.sleep(2)
-        option(3)
+        option_3()
+    elif option == 4:
+        print("Exiting program. Bye-bye!!")
+        break
     else:
-        exit()
+        print("Invalid selection. Please try again.")
 # Read file and add into quiz simulator
 # Add features like points system or time sensitivity if possible
