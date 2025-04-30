@@ -72,6 +72,7 @@ def option_2():
         elif repeat.lower() == 'n':
             continue
 
+# Read file and add into quiz simulator
 def load_quiz(quiz_filename):
     with open(quiz_filename, 'r') as file:
         content = file.read()
@@ -80,15 +81,29 @@ def load_quiz(quiz_filename):
     questions = []
 
     for block in blocks:
-        lines = block.strip().spliy("\n")
+        lines = block.strip().split("\n")
+        if len(lines) < 6:
+            print(block)
+            continue
+
         quiz_data = {}
+
         quiz_data['question'] = lines[0]
-        quiz_data['a']= lines[1][3:].strip()
+        quiz_data['a'] = lines[1][3:].strip()
         quiz_data['b'] = lines[2][3:].strip()
         quiz_data['c'] = lines[3][3:].strip()
         quiz_data['d'] = lines[4][3:].strip()
-        quiz_data['answer'] = lines[5].split(":")[1].strip()
-        questions.append(quiz_data)
+        try:
+            quiz_data['answer'] = lines[5].split(": ")[1].strip()
+        except IndexError:
+            print("Malformed answer line!")
+            continue
+        else:
+            print("Missing correct answer!")
+            print(block)
+            continue
+
+    questions.append(quiz_data)
     return questions
     
 
@@ -102,7 +117,26 @@ def option_3():
             print("Awww shucks, your file does not exist! Please check your spelling and try again :)")
             continue
         
-        
+        print(f"\nStarting quiz '{filename}'....\n")
+        score = 0
+
+        # Add features like points system or time sensitivity if possible
+        for question in enumerate(questions):
+            print(f"{question}\n" \
+            f"a) {question['a']}\n" \
+            f"b) {question['b']}\n" \
+            f"c) {question['c']}\n" \
+            f"d) {question['d']}\n")
+            user_answer = input("Your answer (a/b/c/d): ").strip().lower()
+
+        if user_answer == q['answer']:
+            print("YIPPEEEEEE CORRECT!!!!")
+            score += 1
+        else:
+            print("Aww man... Better luck next time :(")
+            print(f"By the way, the correct answer is: {question['answer']}")
+
+        print(f"Quiz complete! Your total score: {score}/{len(questions)}")
 
         repeat = input("\nReturn to main menu?\nYour selection (y/n): ")
         if repeat.lower() == 'y':
@@ -135,7 +169,3 @@ while True:
         break
     else:
         print("Invalid selection. Please try again.")
-
-
-# Read file and add into quiz simulator
-# Add features like points system or time sensitivity if possible
